@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: tiger-system # 微服务需要用到
+  profiles:
+    active: @profile.name@

@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: -1 #设置tomcat的最大吞吐量
+  error:
+    include-exception: true
+    include-stacktrace: ALWAYS
+    include-message: ALWAYS #返回异常错误信息
+  servlet:
+    context-path: /quick-system
+  compression:
+    enabled: true  #Http包压缩功能
+    min-response-size: 1024 #压缩阈值
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/* #指定要压缩的类型
+
+#spring:
+#  autoconfigure:
+#    exclude:
+
+#swagger
+knife4j:
+  #开启增强配置
+  enable: true
+  #开启生产环境屏蔽
+  production: false
+  basic:
+    enable: false
+    username: zhoujian
+    password: 1234
