@@ -15,7 +15,9 @@ import java.util.Date;
 
 
 @Data
+// 继承类的实现
 @EqualsAndHashCode(callSuper = false)
+// get和set的时实现
 @Accessors(chain = true)
 public class SysUser implements Serializable {
 
