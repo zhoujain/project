@@ -1,6 +1,11 @@
 package com.quick.modules.system.controller;
 
 
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
+import com.quick.common.api.vo.Result;
+import com.quick.modules.system.entity.SysUser;
+import com.quick.modules.system.service.ISysUserService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -14,12 +19,12 @@ import java.util.*;
 @Slf4j
 @RestController
 @RequestMapping("/sys/user")
+@Api(tags = "用户操作API")
+@ApiSort(2)
 public class SysUserController {
 
 	@Autowired
 	private ISysUserService sysUserService;
-
-
 
 
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
@@ -35,20 +40,20 @@ public class SysUserController {
         return result;
     }
 
-    @RequestMapping(value = "/queryUserRole", method = RequestMethod.GET)
-    public Result<List<String>> queryUserRole(@RequestParam(name = "userid", required = true) String userid) {
-        Result<List<String>> result = new Result<>();
-        List<String> list = new ArrayList<String>();
-        List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));
-        if (userRole == null || userRole.size() <= 0) {
-            result.error500("未找到用户相关角色信息");
-        } else {
-            for (SysUserRole sysUserRole : userRole) {
-                list.add(sysUserRole.getRoleId());
-            }
-            result.setSuccess(true);
-            result.setResult(list);
-        }
-        return result;
-    }
+//    @RequestMapping(value = "/queryUserRole", method = RequestMethod.GET)
+//    public Result<List<String>> queryUserRole(@RequestParam(name = "userid", required = true) String userid) {
+//        Result<List<String>> result = new Result<>();
+//        List<String> list = new ArrayList<String>();
+//        List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));
+//        if (userRole == null || userRole.size() <= 0) {
+//            result.error500("未找到用户相关角色信息");
+//        } else {
+//            for (SysUserRole sysUserRole : userRole) {
+//                list.add(sysUserRole.getRoleId());
+//            }
+//            result.setSuccess(true);
+//            result.setResult(list);
+//        }
+//        return result;
+//    }
 }
