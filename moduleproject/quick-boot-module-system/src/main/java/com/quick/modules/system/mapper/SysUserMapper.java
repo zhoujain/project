@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 @Repository
+@Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
 	/**
 	  * 通过用户账号查询用户信息

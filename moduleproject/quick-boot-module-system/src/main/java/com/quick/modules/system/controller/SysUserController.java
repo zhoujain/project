@@ -6,6 +6,7 @@ import com.quick.common.api.vo.Result;
 import com.quick.modules.system.entity.SysUser;
 import com.quick.modules.system.service.ISysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -27,7 +28,8 @@ public class SysUserController {
 	private ISysUserService sysUserService;
 
 
-    @RequestMapping(value = "/queryById", method = RequestMethod.GET)
+    @GetMapping(value = "/queryById")
+    @ApiOperation(value = "查询用户",notes = "测试")
     public Result<SysUser> queryById(@RequestParam(name = "id", required = true) String id) {
         Result<SysUser> result = new Result<SysUser>();
         SysUser sysUser = sysUserService.getById(id);
