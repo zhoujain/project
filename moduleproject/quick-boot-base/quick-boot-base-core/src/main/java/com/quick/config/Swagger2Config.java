@@ -189,5 +189,4 @@ public class Swagger2Config implements WebMvcConfigurer {
             }
         };
     }
-
 }

@@ -3,6 +3,7 @@ package com.quick.common.util;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.toolkit.JdbcUtils;
+import com.quick.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
