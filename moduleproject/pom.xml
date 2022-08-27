@@ -311,21 +311,21 @@
 <!--                <version>4.4.1</version>-->
 <!--            </dependency>-->
 
-<!--            <dependency>-->
-<!--                <groupId>io.minio</groupId>-->
-<!--                <artifactId>minio</artifactId>-->
-<!--                <version>${minio.version}</version>-->
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <artifactId>okio</artifactId>-->
-<!--                        <groupId>com.squareup.okio</groupId>-->
-<!--                    </exclusion>-->
-<!--                    <exclusion>-->
-<!--                        <artifactId>okhttp</artifactId>-->
-<!--                        <groupId>com.squareup.okhttp3</groupId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>okio</artifactId>
+                        <groupId>com.squareup.okio</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>okhttp</artifactId>
+                        <groupId>com.squareup.okhttp3</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <!-- 企业微信和钉钉 api -->
 <!--            <dependency>-->
 <!--                <groupId>org.jeecgframework</groupId>-->

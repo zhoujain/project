@@ -120,7 +120,7 @@ public class CommonController {
             }
             String orgName = mf.getOriginalFilename();// 获取文件名
             orgName = CommonUtils.getFileName(orgName);
-            if(orgName.indexOf(".")!=-1){
+            if(orgName.contains(".")){
                 fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.lastIndexOf("."));
             }else{
                 fileName = orgName+ "_" + System.currentTimeMillis();
