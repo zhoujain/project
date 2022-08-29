@@ -29,16 +29,16 @@ import java.util.regex.Pattern;
 @Slf4j
 public class CommonUtils {
 
-   //中文正则
+    //中文正则
     private static Pattern ZHONGWEN_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
 
-    public static String uploadOnlineImage(byte[] data,String basePath,String bizPath,String uploadType){
+    public static String uploadOnlineImage(byte[] data, String basePath, String bizPath, String uploadType) {
         String dbPath = null;
         String fileName = "image" + Math.round(Math.random() * 100000000000L);
         fileName += "." + PoiPublicUtil.getFileExtendName(data);
         try {
-            if(CommonConstant.UPLOAD_TYPE_LOCAL.equals(uploadType)){
-                File file = new File(basePath + File.separator + bizPath + File.separator );
+            if (CommonConstant.UPLOAD_TYPE_LOCAL.equals(uploadType)) {
+                File file = new File(basePath + File.separator + bizPath + File.separator);
                 if (!file.exists()) {
                     file.mkdirs();// 创建文件根目录
                 }
@@ -46,13 +46,13 @@ public class CommonUtils {
                 File savefile = new File(savePath);
                 FileCopyUtils.copy(data, savefile);
                 dbPath = bizPath + File.separator + fileName;
-            }else {
+            } else {
                 InputStream in = new ByteArrayInputStream(data);
-                String relativePath = bizPath+"/"+fileName;
-                if(CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)){
-                    dbPath = MinioUtil.upload(in,relativePath);
-                }else if(CommonConstant.UPLOAD_TYPE_OSS.equals(uploadType)){
-                    dbPath = OssBootUtil.upload(in,relativePath);
+                String relativePath = bizPath + "/" + fileName;
+                if (CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)) {
+                    dbPath = MinioUtil.upload(in, relativePath);
+                } else if (CommonConstant.UPLOAD_TYPE_OSS.equals(uploadType)) {
+                    dbPath = OssBootUtil.upload(in, relativePath);
                 }
             }
         } catch (Exception e) {
@@ -63,34 +63,35 @@ public class CommonUtils {
 
     /**
      * 判断文件名是否带盘符，重新处理
+     *
      * @param fileName
      * @return
      */
-    public static String getFileName(String fileName){
+    public static String getFileName(String fileName) {
         //判断是否带有盘符信息
         // Check for Unix-style path
         int unixSep = fileName.lastIndexOf('/');
         // Check for Windows-style path
         int winSep = fileName.lastIndexOf('\\');
         // Cut off at latest possible point
-        int pos = (winSep > unixSep ? winSep : unixSep);
-        if (pos != -1)  {
+        int pos = (Math.max(winSep, unixSep));
+        if (pos != -1) {
             // Any sort of path separator found...
             fileName = fileName.substring(pos + 1);
         }
         //替换上传文件名字的特殊字符
-        fileName = fileName.replace("=","").replace(",","").replace("&","")
+        fileName = fileName.replace("=", "").replace(",", "").replace("&", "")
                 .replace("#", "").replace("“", "").replace("”", "");
         //替换上传文件名字中的空格
-        fileName=fileName.replaceAll("\\s","");
+        fileName = fileName.replaceAll("\\s", "");
         return fileName;
     }
 
     // java 判断字符串里是否包含中文字符
     public static boolean ifContainChinese(String str) {
-        if(str.getBytes().length == str.length()){
+        if (str.getBytes().length == str.length()) {
             return false;
-        }else{
+        } else {
             Matcher m = ZHONGWEN_PATTERN.matcher(str);
             if (m.find()) {
                 return true;
@@ -101,47 +102,50 @@ public class CommonUtils {
 
     /**
      * 统一全局上传
+     *
      * @Return: java.lang.String
      */
     public static String upload(MultipartFile file, String bizPath, String uploadType) {
         String url = "";
-        if(CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)){
-            url = MinioUtil.upload(file,bizPath);
-        }else{
-            url = OssBootUtil.upload(file,bizPath);
+        if (CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)) {
+            url = MinioUtil.upload(file, bizPath);
+        } else {
+            url = OssBootUtil.upload(file, bizPath);
         }
         return url;
     }
+
     /**
      * 本地文件上传
-     * @param mf 文件
-     * @param bizPath  自定义路径
+     *
+     * @param mf      文件
+     * @param bizPath 自定义路径
      * @return
      */
-    public static String uploadLocal(MultipartFile mf, String bizPath, String uploadpath){
+    public static String uploadLocal(MultipartFile mf, String bizPath, String uploadpath) {
         try {
             //update-begin-author:liusq date:20210809 for: 过滤上传文件类型
             FileTypeFilter.fileTypeFilter(mf);
             //update-end-author:liusq date:20210809 for: 过滤上传文件类型
             String fileName = null;
-            File file = new File(uploadpath + File.separator + bizPath + File.separator );
+            File file = new File(uploadpath + File.separator + bizPath + File.separator);
             if (!file.exists()) {
                 file.mkdirs();// 创建文件根目录
             }
             String orgName = mf.getOriginalFilename();// 获取文件名
             orgName = CommonUtils.getFileName(orgName);
-            if(orgName.indexOf(".")!=-1){
+            if (orgName.indexOf(".") != -1) {
                 fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.lastIndexOf("."));
-            }else{
-                fileName = orgName+ "_" + System.currentTimeMillis();
+            } else {
+                fileName = orgName + "_" + System.currentTimeMillis();
             }
             String savePath = file.getPath() + File.separator + fileName;
             File savefile = new File(savePath);
             FileCopyUtils.copy(mf.getBytes(), savefile);
             String dbpath = null;
-            if(MyConvertUtils.isNotEmpty(bizPath)){
+            if (MyConvertUtils.isNotEmpty(bizPath)) {
                 dbpath = bizPath + File.separator + fileName;
-            }else{
+            } else {
                 dbpath = fileName;
             }
             if (dbpath.contains("\\")) {
@@ -150,7 +154,7 @@ public class CommonUtils {
             return dbpath;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return "";
@@ -158,19 +162,22 @@ public class CommonUtils {
 
     /**
      * 统一全局上传 带桶
+     *
      * @Return: java.lang.String
      */
     public static String upload(MultipartFile file, String bizPath, String uploadType, String customBucket) {
         String url = "";
-        if(CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)){
-            url = MinioUtil.upload(file,bizPath,customBucket);
-        }else{
-            url = OssBootUtil.upload(file,bizPath,customBucket);
+        if (CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)) {
+            url = MinioUtil.upload(file, bizPath, customBucket);
+        } else {
+            url = OssBootUtil.upload(file, bizPath, customBucket);
         }
         return url;
     }
 
-    /** 当前系统数据库类型 */
+    /**
+     * 当前系统数据库类型
+     */
     private static String DB_TYPE = "";
     private static DbType dbTypeEnum = null;
 
@@ -195,6 +202,7 @@ public class CommonUtils {
 
     /**
      * 全局获取平台数据库类型（对应mybaisPlus枚举）
+     *
      * @return
      */
     public static DbType getDatabaseTypeEnum() {
@@ -282,6 +290,7 @@ public class CommonUtils {
 //        return DB_TYPE;
 //
 //    }
+
     /**
      * 获取服务器地址
      *
@@ -291,14 +300,14 @@ public class CommonUtils {
     public static String getBaseUrl(HttpServletRequest request) {
         //1.【兼容】兼容微服务下的 base path-------
         String x_gateway_base_path = request.getHeader("X_GATEWAY_BASE_PATH");
-        if(MyConvertUtils.isNotEmpty(x_gateway_base_path)){
-            log.info("x_gateway_base_path = "+ x_gateway_base_path);
-            return  x_gateway_base_path;
+        if (MyConvertUtils.isNotEmpty(x_gateway_base_path)) {
+            log.info("x_gateway_base_path = " + x_gateway_base_path);
+            return x_gateway_base_path;
         }
         //2.【兼容】SSL认证之后，request.getScheme()获取不到https的问题
         // https://blog.csdn.net/weixin_34376986/article/details/89767950
         String scheme = request.getHeader("X-Forwarded-Scheme");
-        if(MyConvertUtils.isEmpty(scheme)){
+        if (MyConvertUtils.isEmpty(scheme)) {
             scheme = request.getScheme();
         }
 
@@ -309,10 +318,10 @@ public class CommonUtils {
 
         //返回 host domain
         String baseDomainPath = null;
-        if(80 == serverPort){
-            baseDomainPath = scheme + "://" + serverName  + contextPath ;
-        }else{
-            baseDomainPath = scheme + "://" + serverName + ":" + serverPort + contextPath ;
+        if (80 == serverPort) {
+            baseDomainPath = scheme + "://" + serverName + contextPath;
+        } else {
+            baseDomainPath = scheme + "://" + serverName + ":" + serverPort + contextPath;
         }
         log.info("-----Common getBaseUrl----- : " + baseDomainPath);
         return baseDomainPath;

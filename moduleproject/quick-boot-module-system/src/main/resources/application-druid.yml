@@ -43,9 +43,9 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     # 主库数据源
     #url: jdbc:mysql://127.0.01.1:3306/jeecg-boot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    url: jdbc:mysql://172.20.20.8:3306/jeecg-boot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://172.20.20.18:3306/jeecg-boot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: zhou
+    password: Ntdh@123
     druid:
       # 初始连接数
       initialSize: 5
@@ -119,5 +119,8 @@ mybatis-plus:
 
 quick:
   # 本地：local\Minio：minio\阿里云：alioss
-  uploadType: minio
+  uploadType: local
+  path:
+    #文件上传根目录 设置
+    upload: D:\quickDownloads
 
