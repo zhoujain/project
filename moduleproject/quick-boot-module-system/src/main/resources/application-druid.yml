@@ -16,7 +16,7 @@ server:
 spring:
   servlet:
     multipart:
-      max-file-size: 10MB # 设置单个文件的大小
+      max-file-size: 10MB # 设置单个文件的大小 默认是 1MB
       max-request-size: 10MB # 设置单次请求文件的总大小
   #redis 配置
   redis:
