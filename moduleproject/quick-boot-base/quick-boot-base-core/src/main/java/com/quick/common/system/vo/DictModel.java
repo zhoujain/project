@@ -1,4 +1,4 @@
-package com.quick.system.vo;
+package com.quick.common.system.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -20,12 +20,12 @@ public class DictModel implements Serializable{
 
 	public DictModel() {
 	}
-	
+
 	public DictModel(String value, String text) {
 		this.value = value;
 		this.text = text;
 	}
-	
+
 	/**
 	 * 字典value
 	 */

@@ -1,4 +1,4 @@
-package com.quick.system.vo;
+package com.quick.common.system.vo;
 
 import lombok.Data;
 

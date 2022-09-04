@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.quick.modules.system.entity.SysDict;
 import com.quick.modules.system.model.DuplicateCheckVo;
 import com.quick.modules.system.model.TreeSelectModel;
-import com.quick.system.vo.DictModel;
-import com.quick.system.vo.DictModelMany;
-import com.quick.system.vo.DictQuery;
+import com.quick.common.system.vo.DictModel;
+import com.quick.common.system.vo.DictModelMany;
+import com.quick.common.system.vo.DictQuery;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @since 2018-12-28
  */
 public interface SysDictMapper extends BaseMapper<SysDict> {
-	
+
 	/**
 	 * 重复检查SQL
      * @param duplicateCheckVo

@@ -11,7 +11,7 @@
 //import com.quick.common.aspect.annotation.Dict;
 //import com.quick.common.constant.CommonConstant;
 //import com.quick.common.util.MyConvertUtils;
-//import com.quick.system.vo.DictModel;
+//import com.quick.common.system.vo.DictModel;
 //import lombok.extern.slf4j.Slf4j;
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.annotation.Around;

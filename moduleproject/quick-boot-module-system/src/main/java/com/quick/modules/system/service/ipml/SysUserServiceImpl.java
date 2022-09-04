@@ -10,6 +10,7 @@ import com.quick.common.constant.CacheConstant;
 import com.quick.common.constant.CommonConstant;
 import com.quick.common.util.MyConvertUtils;
 import com.quick.common.util.PasswordUtil;
+import com.quick.modules.base.service.BaseCommonService;
 import com.quick.modules.system.entity.SysUser;
 import com.quick.modules.system.mapper.SysUserMapper;
 import com.quick.modules.system.service.ISysUserService;
@@ -38,6 +39,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Autowired
 	private SysUserMapper userMapper;
+	@Autowired
+	private BaseCommonService baseCommonService;
 
     @Override
     @CacheEvict(value = {CacheConstant.SYS_USERS_CACHE}, allEntries = true)
@@ -224,7 +227,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	public Result<?> checkUserIsEffective(SysUser sysUser) {
-		return null;
+		Result<?> result = new Result<Object>();
+		// 1. 用户不存在
+		if (sysUser == null){
+			result.error500("该用户不存在，请注册");
+			baseCommonService.addLog("用户登录失败，用户不存在！", CommonConstant.LOG_TYPE_1, null);
+			return result;
+		}
+		// 2.用户已经注销
+		if (CommonConstant.DEL_FLAG_1.equals(sysUser.getDelFlag())){
+			baseCommonService.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已注销！", CommonConstant.LOG_TYPE_1, null);
+			result.error500("该用户已注销");
+			return result;
+		}
+		// 3.用户已经冻结
+		if (CommonConstant.USER_FREEZE.equals(sysUser.getStatus())){
+			baseCommonService.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已冻结！", CommonConstant.LOG_TYPE_1, null);
+			result.error500("该用户已冻结");
+			return result;
+		}
+		return result;
 	}
 
 	@Override
