@@ -50,6 +50,7 @@ public class SysDepart implements Serializable {
 	@Excel(name="机构类别",width=15,dicCode="org_category")
 	private String orgCategory;
 	/**机构类型*/
+//	机构类型 1一级部门 2子部门
 	private String orgType;
 	/**机构编码*/
 	@Excel(name="机构编码",width=15)

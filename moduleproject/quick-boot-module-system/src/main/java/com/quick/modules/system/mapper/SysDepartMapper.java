@@ -37,14 +37,14 @@ public interface SysDepartMapper extends BaseMapper<SysDepart> {
 	public SysDepart getParentDepartId(@Param("departId") String departId);
 
 	/**
-	 *  根据部门Id查询,当前和下级所有部门IDS
+	 *  根据部门Id查询,当前和下级所有部门IDS  原理通过部门的拼接不停的找数据
 	 * @param departId
 	 * @return
 	 */
 	List<String> getSubDepIdsByDepId(@Param("departId") String departId);
 
 	/**
-	 * 根据部门编码获取部门下所有IDS
+	 * 根据部门编码获取部门下所有IDS  循环的使用
 	 * @param orgCodes
 	 * @return
 	 */
