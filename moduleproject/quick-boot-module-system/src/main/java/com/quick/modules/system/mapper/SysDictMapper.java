@@ -12,6 +12,7 @@ import com.quick.common.system.vo.DictQuery;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Map;
  * @Author zhangweijian
  * @since 2018-12-28
  */
+@Repository
 public interface SysDictMapper extends BaseMapper<SysDict> {
 
 	/**

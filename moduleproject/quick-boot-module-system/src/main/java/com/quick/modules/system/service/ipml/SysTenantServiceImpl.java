@@ -49,7 +49,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         // 查找出已被关联的用户数量
         long userCount = this.countUserLinkTenant(id);
         if (userCount > 0) {
-            throw new BusinessException(("该租户已被引用，无法删除！");
+            throw new BusinessException("该租户已被引用，无法删除！");
         }
         return super.removeById(Integer.parseInt(id));
     }

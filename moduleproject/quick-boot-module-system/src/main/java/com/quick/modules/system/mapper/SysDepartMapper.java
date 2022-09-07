@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.quick.modules.system.entity.SysDepart;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @Author: Steve
  * @Since：   2019-01-22
  */
+@Repository
 public interface SysDepartMapper extends BaseMapper<SysDepart> {
 
 	/**

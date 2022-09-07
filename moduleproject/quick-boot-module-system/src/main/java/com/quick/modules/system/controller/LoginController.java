@@ -5,20 +5,24 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.quick.common.api.vo.Result;
 import com.quick.common.constant.CommonConstant;
 import com.quick.common.system.util.JwtUtil;
+import com.quick.common.system.vo.LoginUser;
 import com.quick.common.util.Md5Util;
 import com.quick.common.util.MyConvertUtils;
 import com.quick.common.util.PasswordUtil;
 import com.quick.common.util.RedisUtil;
+import com.quick.modules.base.service.BaseCommonService;
 import com.quick.modules.system.entity.SysDepart;
 import com.quick.modules.system.entity.SysTenant;
 import com.quick.modules.system.entity.SysUser;
 import com.quick.modules.system.model.SysLoginModel;
 import com.quick.modules.system.service.ISysDepartService;
+import com.quick.modules.system.service.ISysDictService;
 import com.quick.modules.system.service.ISysTenantService;
 import com.quick.modules.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +51,11 @@ public class LoginController {
     private ISysDepartService sysDepartService;
     @Autowired
     private ISysTenantService sysTenantService;
+    @Autowired
+    private ISysDictService sysDictService;
+    @Autowired
+    private BaseCommonService baseCommonService;
+
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
@@ -87,6 +96,13 @@ public class LoginController {
 
         // 用户信息
         userInfo(sysUser, result);
+        //update-begin--Author:liusq  Date:20210126  for：登录成功，删除redis中的验证码
+        redisUtil.del(realKey);
+        //update-begin--Author:liusq  Date:20210126  for：登录成功，删除redis中的验证码
+        LoginUser loginUser = new LoginUser();
+        BeanUtils.copyProperties(sysUser, loginUser);
+        baseCommonService.addLog("用户名: " + username + ",登录成功！", CommonConstant.LOG_TYPE_1, null,loginUser);
+        //update-end--Author:wangshuai  Date:20200714  for：登录日志没有记录人员
         return result;
     }
 
@@ -146,5 +162,6 @@ public class LoginController {
         obj.put("sysAllDictItems", sysDictService.queryAllDictItems());
         result.setResult(obj);
         result.success("登录成功");
+        return result;
     }
 }

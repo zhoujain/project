@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 字典表
+ * 字典表 字典信息描述
  * </p>
  *
  * @Author zhangweijian

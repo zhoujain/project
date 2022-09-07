@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * <p>
- *
+ * 字典表的子表 具体表述值的含义
  * </p>
  *
  * @Author zhangweijian
