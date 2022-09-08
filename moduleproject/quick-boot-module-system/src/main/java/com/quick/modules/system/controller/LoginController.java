@@ -9,10 +9,7 @@ import com.quick.common.constant.CacheConstant;
 import com.quick.common.constant.CommonConstant;
 import com.quick.common.system.util.JwtUtil;
 import com.quick.common.system.vo.LoginUser;
-import com.quick.common.util.Md5Util;
-import com.quick.common.util.MyConvertUtils;
-import com.quick.common.util.PasswordUtil;
-import com.quick.common.util.RedisUtil;
+import com.quick.common.util.*;
 import com.quick.modules.base.service.BaseCommonService;
 import com.quick.modules.system.entity.SysDepart;
 import com.quick.modules.system.entity.SysTenant;
@@ -178,11 +175,11 @@ public class LoginController {
         calendar.add(Calendar.DATE, 1);
         Date dayEnd = calendar.getTime();
         // 获取系统访问记录
-        Long totalVisitCount = sysLogService.findTotalVisitCount();
+        Long totalVisitCount = sysLogService.findTotalVisitCount(); //总
         obj.put("totalVisitCount", totalVisitCount);
-        Long todayVisitCount = sysLogService.findTodayVisitCount(dayStart,dayEnd);
+        Long todayVisitCount = sysLogService.findTodayVisitCount(dayStart,dayEnd); //今日
         obj.put("todayVisitCount", todayVisitCount);
-        Long todayIp = sysLogService.findTodayIp(dayStart,dayEnd);
+        Long todayIp = sysLogService.findTodayIp(dayStart,dayEnd); //今日ip
         //update-end--Author:zhangweijian  Date:20190428 for：传入开始时间，结束时间参数
         obj.put("todayIp", todayIp);
         result.setResult(obj);
@@ -191,7 +188,7 @@ public class LoginController {
     }
 
     /**
-     * 获取访问量
+     * 最近一周获取访问量
      * @return
      */
     @GetMapping("visitInfo")
