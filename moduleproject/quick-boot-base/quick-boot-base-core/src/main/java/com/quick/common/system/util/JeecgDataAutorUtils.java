@@ -1,8 +1,8 @@
 package com.quick.common.system.util;
 
-import org.jeecg.common.system.vo.SysPermissionDataRuleModel;
-import org.jeecg.common.system.vo.SysUserCacheInfo;
-import org.jeecg.common.util.SpringContextUtils;
+import com.quick.common.system.vo.SysPermissionDataRuleModel;
+import com.quick.common.system.vo.SysUserCacheInfo;
+import com.quick.common.util.SpringContextUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

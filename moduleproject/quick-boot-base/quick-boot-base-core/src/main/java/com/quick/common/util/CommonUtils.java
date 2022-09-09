@@ -1,9 +1,12 @@
 package com.quick.common.util;
 
 
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.toolkit.JdbcUtils;
 import com.quick.common.constant.CommonConstant;
+import com.quick.common.constant.DataBaseConstant;
 import com.quick.common.util.filter.FileTypeFilter;
 import com.quick.common.util.oss.OssBootUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -185,20 +188,20 @@ public class CommonUtils {
      * 全局获取平台数据库类型（作废了）
      * @return
      */
-//    @Deprecated
-//    public static String getDatabaseType() {
-//        if(MyConvertUtils.isNotEmpty(DB_TYPE)){
-//            return DB_TYPE;
-//        }
-//        DataSource dataSource = SpringContextUtils.getApplicationContext().getBean(DataSource.class);
-//        try {
-//            return getDatabaseTypeByDataSource(dataSource);
-//        } catch (SQLException e) {
-//            //e.printStackTrace();
-//            log.warn(e.getMessage(),e);
-//            return "";
-//        }
-//    }
+    @Deprecated
+    public static String getDatabaseType() {
+        if(MyConvertUtils.isNotEmpty(DB_TYPE)){
+            return DB_TYPE;
+        }
+        DataSource dataSource = SpringContextUtils.getApplicationContext().getBean(DataSource.class);
+        try {
+            return getDatabaseTypeByDataSource(dataSource);
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            log.warn(e.getMessage(),e);
+            return "";
+        }
+    }
 
     /**
      * 全局获取平台数据库类型（对应mybaisPlus枚举）
@@ -224,12 +227,12 @@ public class CommonUtils {
      * @param sourceKey
      * @return
      */
-//    public static DataSourceProperty getDataSourceProperty(String sourceKey){
-//        DynamicDataSourceProperties prop = SpringContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
-//        Map<String, DataSourceProperty> map = prop.getDatasource();
-//        DataSourceProperty db = (DataSourceProperty)map.get(sourceKey);
-//        return db;
-//    }
+    public static DataSourceProperty getDataSourceProperty(String sourceKey){
+        DynamicDataSourceProperties prop = SpringContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
+        Map<String, DataSourceProperty> map = prop.getDatasource();
+        DataSourceProperty db = (DataSourceProperty)map.get(sourceKey);
+        return db;
+    }
 
     /**
      * 根据sourceKey 获取数据源连接
@@ -261,35 +264,35 @@ public class CommonUtils {
      * @return
      * @throws SQLException
      */
-//    private static String getDatabaseTypeByDataSource(DataSource dataSource) throws SQLException{
-//        if("".equals(DB_TYPE)) {
-//            Connection connection = dataSource.getConnection();
-//            try {
-//                DatabaseMetaData md = connection.getMetaData();
-//                String dbType = md.getDatabaseProductName().toLowerCase();
-//                if(dbType.indexOf("mysql")>=0) {
-//                    DB_TYPE = DataBaseConstant.DB_TYPE_MYSQL;
-//                }else if(dbType.indexOf("oracle")>=0 ||dbType.indexOf("dm")>=0) {
-//                    DB_TYPE = DataBaseConstant.DB_TYPE_ORACLE;
-//                }else if(dbType.indexOf("sqlserver")>=0||dbType.indexOf("sql server")>=0) {
-//                    DB_TYPE = DataBaseConstant.DB_TYPE_SQLSERVER;
-//                }else if(dbType.indexOf("postgresql")>=0) {
-//                    DB_TYPE = DataBaseConstant.DB_TYPE_POSTGRESQL;
-//                }else if(dbType.indexOf("mariadb")>=0) {
-//                    DB_TYPE = DataBaseConstant.DB_TYPE_MARIADB;
-//                }else {
-//                    log.error("数据库类型:[" + dbType + "]不识别!");
-//                    //throw new JeecgBootException("数据库类型:["+dbType+"]不识别!");
-//                }
-//            } catch (Exception e) {
-//                log.error(e.getMessage(), e);
-//            }finally {
-//                connection.close();
-//            }
-//        }
-//        return DB_TYPE;
-//
-//    }
+    private static String getDatabaseTypeByDataSource(DataSource dataSource) throws SQLException{
+        if("".equals(DB_TYPE)) {
+            Connection connection = dataSource.getConnection();
+            try {
+                DatabaseMetaData md = connection.getMetaData();
+                String dbType = md.getDatabaseProductName().toLowerCase();
+                if(dbType.indexOf("mysql")>=0) {
+                    DB_TYPE = DataBaseConstant.DB_TYPE_MYSQL;
+                }else if(dbType.indexOf("oracle")>=0 ||dbType.indexOf("dm")>=0) {
+                    DB_TYPE = DataBaseConstant.DB_TYPE_ORACLE;
+                }else if(dbType.indexOf("sqlserver")>=0||dbType.indexOf("sql server")>=0) {
+                    DB_TYPE = DataBaseConstant.DB_TYPE_SQLSERVER;
+                }else if(dbType.indexOf("postgresql")>=0) {
+                    DB_TYPE = DataBaseConstant.DB_TYPE_POSTGRESQL;
+                }else if(dbType.indexOf("mariadb")>=0) {
+                    DB_TYPE = DataBaseConstant.DB_TYPE_MARIADB;
+                }else {
+                    log.error("数据库类型:[" + dbType + "]不识别!");
+                    //throw new JeecgBootException("数据库类型:["+dbType+"]不识别!");
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }finally {
+                connection.close();
+            }
+        }
+        return DB_TYPE;
+
+    }
 
     /**
      * 获取服务器地址
