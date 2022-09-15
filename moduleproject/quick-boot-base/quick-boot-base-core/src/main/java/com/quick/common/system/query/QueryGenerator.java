@@ -117,6 +117,7 @@ public class QueryGenerator {
 		
 		//区间条件组装 模糊查询 高级查询组装 简单排序 权限查询
 		PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(searchObj);
+		// request中获取数据
 		Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
 		
 		//权限规则自定义SQL表达式
@@ -138,7 +139,7 @@ public class QueryGenerator {
 				if (judgedIsUselessField(name)|| !PropertyUtils.isReadable(searchObj, name)) {
 					continue;
 				}
-
+				// 获取值
 				Object value = PropertyUtils.getSimpleProperty(searchObj, name);
 				column = getTableFieldName(searchObj.getClass(), name);
 				if(column==null){
@@ -665,7 +666,7 @@ public class QueryGenerator {
 			for (SysPermissionDataRuleModel rule : list) {
 				String column = rule.getRuleColumn();
 				if(QueryRuleEnum.SQL_RULES.getValue().equals(rule.getRuleConditions())) {
-					column = SQL_RULES_COLUMN+rule.getId();
+					column = SQL_RULES_COLUMN + rule.getId();
 				}
 				ruleMap.put(column, rule);
 			}
@@ -726,8 +727,9 @@ public class QueryGenerator {
 	
 	public static String getSqlRuleValue(String sqlRule){
 		try {
+			// 获取参数
 			Set<String> varParams = getSqlRuleParams(sqlRule);
-			for(String var:varParams){
+			for(String var: varParams){
 				String tempValue = converRuleValue(var);
 				sqlRule = sqlRule.replace("#{"+var+"}",tempValue);
 			}
@@ -1108,8 +1110,8 @@ public class QueryGenerator {
 
 	/**
 	 * 获取表字段名
-	 * @param clazz
-	 * @param name
+	 * @param clazz  实体类Class
+	 * @param name 变量名称
 	 * @return
 	 */
 	private static String getTableFieldName(Class<?> clazz, String name) {
@@ -1124,6 +1126,7 @@ public class QueryGenerator {
 
 			//如果为空，则去父类查找字段
 			if (field == null) {
+				// 获取所有变量
 				List<Field> allFields = getClassFields(clazz);
 				List<Field> searchFields = allFields.stream().filter(a -> a.getName().equals(name)).collect(Collectors.toList());
 				if(searchFields!=null && searchFields.size()>0){

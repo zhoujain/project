@@ -165,7 +165,7 @@ public class JwtUtil {
 		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
 		String moshi = "";
-		if(key.indexOf("}")!=-1){
+		if(key.contains("}")){
 			 moshi = key.substring(key.indexOf("}")+1);
 		}
 		String returnValue = null;
