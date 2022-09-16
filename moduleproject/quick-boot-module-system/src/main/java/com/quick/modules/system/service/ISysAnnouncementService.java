@@ -12,4 +12,7 @@ import com.quick.modules.system.entity.SysAnnouncement;
  */
 public interface ISysAnnouncementService extends IService<SysAnnouncement> {
 
+    void saveAnnouncement(SysAnnouncement sysAnnouncement);
+
+    boolean upDateAnnouncement(SysAnnouncement sysAnnouncement);
 }

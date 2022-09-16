@@ -141,6 +141,7 @@ public class QueryGenerator {
 				}
 				// 获取值
 				Object value = PropertyUtils.getSimpleProperty(searchObj, name);
+				// 根据字段名获取表名
 				column = getTableFieldName(searchObj.getClass(), name);
 				if(column==null){
 					//column为null只有一种情况 那就是 添加了注解@TableField(exist = false) 后续都不用处理了
@@ -673,7 +674,14 @@ public class QueryGenerator {
 		}
 		return ruleMap;
 	}
-	
+
+	/**
+	 *
+	 * @param dataRule 规则
+	 * @param name 数据库字段
+	 * @param propertyType 字段类型
+	 * @param queryWrapper wrapper
+	 */
 	private static void addRuleToQueryWrapper(SysPermissionDataRuleModel dataRule, String name, Class propertyType, QueryWrapper<?> queryWrapper) {
 		QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
 		if(rule.equals(QueryRuleEnum.IN) && ! propertyType.equals(String.class)) {
@@ -687,7 +695,7 @@ public class QueryGenerator {
 			if (propertyType.equals(String.class)) {
 				addEasyQuery(queryWrapper, name, rule, converRuleValue(dataRule.getRuleValue()));
 			}else if (propertyType.equals(Date.class)) {
-				String dateStr =converRuleValue(dataRule.getRuleValue());
+				String dateStr = converRuleValue(dataRule.getRuleValue());
                 int length = 10;
 				if(dateStr.length()==length){
 					addEasyQuery(queryWrapper, name, rule, DateUtils.str2Date(dateStr,DateUtils.date_sdf.get()));
