@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -26,7 +27,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.Arrays;
 
 import static java.util.Collections.singletonMap;
 
@@ -43,25 +46,25 @@ public class RedisConfig extends CachingConfigurerSupport {
 //	@Resource
 //	private LettuceConnectionFactory lettuceConnectionFactory;
 
-//	/**
-//	 * @description 自定义的缓存key的生成策略 若想使用这个key
-//	 *              只需要讲注解上keyGenerator的值设置为keyGenerator即可</br>
-//	 * @return 自定义策略生成的key
-//	 */
-//	@Override
-//	@Bean
-//	public KeyGenerator keyGenerator() {
-//		return new KeyGenerator() {
-//			@Override
-//			public Object generate(Object target, Method method, Object... params) {
-//				StringBuilder sb = new StringBuilder();
-//				sb.append(target.getClass().getName());
-//				sb.append(method.getDeclaringClass().getName());
-//				Arrays.stream(params).map(Object::toString).forEach(sb::append);
-//				return sb.toString();
-//			}
-//		};
-//	}
+	/**
+	 * @description 自定义的缓存key的生成策略 若想使用这个key
+	 *              只需要讲注解上keyGenerator的值设置为keyGenerator即可</br>
+	 * @return 自定义策略生成的key
+	 */
+	@Override
+	@Bean
+	public KeyGenerator keyGenerator() {
+		return new KeyGenerator() {
+			@Override
+			public Object generate(Object target, Method method, Object... params) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(target.getClass().getName());
+				sb.append(method.getDeclaringClass().getName());
+				Arrays.stream(params).map(Object::toString).forEach(sb::append);
+				return sb.toString();
+			}
+		};
+	}
 
 	/**
 	 * RedisTemplate配置
@@ -125,28 +128,28 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return cacheManager;
 	}
 
-//	/**
-//	 * redis 监听配置
-//	 *
-//	 * @param redisConnectionFactory redis 配置
-//	 * @return
-//	 */
-//	@Bean
-//	public RedisMessageListenerContainer redisContainer(RedisConnectionFactory redisConnectionFactory, RedisReceiver redisReceiver, MessageListenerAdapter commonListenerAdapter) {
-//		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-//		container.setConnectionFactory(redisConnectionFactory);
-//		container.addMessageListener(commonListenerAdapter, new ChannelTopic(GlobalConstants.REDIS_TOPIC_NAME));
-//		return container;
-//	}
-//
-//
-//	@Bean
-//    MessageListenerAdapter commonListenerAdapter(RedisReceiver redisReceiver) {
-//		MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisReceiver, "onMessage");
-//		messageListenerAdapter.setSerializer(jacksonSerializer());
-//		return messageListenerAdapter;
-//	}
-//
+	/**
+	 * redis 监听配置
+	 *
+	 * @param redisConnectionFactory redis 配置
+	 * @return
+	 */
+	@Bean
+	public RedisMessageListenerContainer redisContainer(RedisConnectionFactory redisConnectionFactory, RedisReceiver redisReceiver, MessageListenerAdapter commonListenerAdapter) {
+		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+		container.setConnectionFactory(redisConnectionFactory);
+		container.addMessageListener(commonListenerAdapter, new ChannelTopic(GlobalConstants.REDIS_TOPIC_NAME));
+		return container;
+	}
+
+
+	@Bean
+    MessageListenerAdapter commonListenerAdapter(RedisReceiver redisReceiver) {
+		MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisReceiver, "onMessage");
+		messageListenerAdapter.setSerializer(jacksonSerializer());
+		return messageListenerAdapter;
+	}
+
 
 	private Jackson2JsonRedisSerializer jacksonSerializer() {
 		// 定义Jackson2JsonRedisSerializer序列化对象
