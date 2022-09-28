@@ -25,16 +25,16 @@ import org.springframework.util.Assert;
  * 该类参照 DefaultRedisCacheWriter 重写了 remove 方法实现通配符*删除
  */
 @Slf4j
-public class JeecgRedisCacheWriter implements RedisCacheWriter {
+public class BusinessRedisCacheWriter implements RedisCacheWriter {
 
     private final RedisConnectionFactory connectionFactory;
     private final Duration sleepTime;
 
-    public JeecgRedisCacheWriter(RedisConnectionFactory connectionFactory) {
+    public BusinessRedisCacheWriter(RedisConnectionFactory connectionFactory) {
         this(connectionFactory, Duration.ZERO);
     }
 
-    public JeecgRedisCacheWriter(RedisConnectionFactory connectionFactory, Duration sleepTime) {
+    public BusinessRedisCacheWriter(RedisConnectionFactory connectionFactory, Duration sleepTime) {
         Assert.notNull(connectionFactory, "ConnectionFactory must not be null!");
         Assert.notNull(sleepTime, "SleepTime must not be null!");
         this.connectionFactory = connectionFactory;

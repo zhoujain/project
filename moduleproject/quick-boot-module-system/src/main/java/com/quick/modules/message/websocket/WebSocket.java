@@ -1,6 +1,9 @@
 package com.quick.modules.message.websocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.quick.common.base.BaseMap;
+import com.quick.common.constant.WebsocketConst;
+import com.quick.common.modules.redis.client.BusinessRedisClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +37,7 @@ public class WebSocket {
     private static final String REDIS_TOPIC_NAME = "socketHandler";
 
     @Resource
-    private JeecgRedisClient jeecgRedisClient;
+    private BusinessRedisClient jeecgRedisClient;
 
     /**
      * 缓存 webSocket连接到单机服务class中（整体方案支持集群）

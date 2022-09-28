@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quick.common.constant.CacheConstant;
-import com.quick.common.modules.redis.writer.JeecgRedisCacheWriter;
+import com.quick.common.constant.GlobalConstants;
+import com.quick.common.modules.redis.receiver.RedisReceiver;
+import com.quick.common.modules.redis.writer.BusinessRedisCacheWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -26,7 +28,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Arrays;
@@ -110,7 +111,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 		// 以锁写入的方式创建RedisCacheWriter对象
 		//update-begin-author:taoyan date:20210316 for:注解CacheEvict根据key删除redis支持通配符*
-		RedisCacheWriter writer = new JeecgRedisCacheWriter(factory, Duration.ofMillis(50L));
+		RedisCacheWriter writer = new BusinessRedisCacheWriter(factory, Duration.ofMillis(50L));
 		//RedisCacheWriter.lockingRedisCacheWriter(factory);
 		// 创建默认缓存配置对象
 		/* 默认配置，设置缓存有效期 1小时*/

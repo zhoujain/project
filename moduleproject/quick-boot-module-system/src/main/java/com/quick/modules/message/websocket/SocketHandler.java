@@ -1,6 +1,9 @@
 package com.quick.modules.message.websocket;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.quick.common.base.BaseMap;
+import com.quick.common.constant.CommonSendStatus;
+import com.quick.common.modules.redis.listener.BusinessRedisListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SocketHandler implements JeecgRedisListener {
+public class SocketHandler implements BusinessRedisListener {
 
     @Autowired
     private WebSocket webSocket;
@@ -25,7 +28,7 @@ public class SocketHandler implements JeecgRedisListener {
         if (ObjectUtil.isNotEmpty(userId)) {
             webSocket.pushMessage(userId, message);
             //app端消息推送
-            webSocket.pushMessage(userId+CommonSendStatus.APP_SESSION_SUFFIX, message);
+            webSocket.pushMessage(userId+ CommonSendStatus.APP_SESSION_SUFFIX, message);
         } else {
             webSocket.pushMessage(message);
         }

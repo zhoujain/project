@@ -1,8 +1,9 @@
 package com.quick.modules.message.websocket;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.constant.WebsocketConst;
+
+import com.quick.common.api.vo.Result;
+import com.quick.common.constant.WebsocketConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
