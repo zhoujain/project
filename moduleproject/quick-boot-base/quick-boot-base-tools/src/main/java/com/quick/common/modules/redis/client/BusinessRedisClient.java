@@ -24,6 +24,7 @@ public class BusinessRedisClient {
      */
     public void sendMessage(String handlerName, BaseMap params){
         params.put(GlobalConstants.HANDLER_NAME, handlerName);
+        // 发布者向Redis发布消息
         redisTemplate.convertAndSend(GlobalConstants.REDIS_TOPIC_NAME, params);
     }
 }

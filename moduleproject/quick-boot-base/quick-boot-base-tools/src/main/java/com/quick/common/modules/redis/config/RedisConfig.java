@@ -61,8 +61,11 @@ public class RedisConfig extends CachingConfigurerSupport {
 			@Override
 			public Object generate(Object target, Method method, Object... params) {
 				StringBuilder sb = new StringBuilder();
+				// 拼接类名
 				sb.append(target.getClass().getName());
+				// 拼接方法名
 				sb.append(method.getDeclaringClass().getName());
+				// 拼接参数
 				Arrays.stream(params).map(Object::toString).forEach(sb::append);
 				return sb.toString();
 			}

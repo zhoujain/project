@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 监听消息(采用redis发布订阅方式发送消息)
- * @author: jeecg-boot
+ * @author: zhoujian
  */
 @Slf4j
 @Component
