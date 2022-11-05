@@ -28,6 +28,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Arrays;
@@ -36,6 +37,7 @@ import static java.util.Collections.singletonMap;
 
 /**
 * 开启缓存支持
+ * 继承了缓存机制
 * @author zyf
  * @Return:
 */
@@ -44,8 +46,8 @@ import static java.util.Collections.singletonMap;
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
-//	@Resource
-//	private LettuceConnectionFactory lettuceConnectionFactory;
+	@Resource
+	private LettuceConnectionFactory lettuceConnectionFactory;
 
 	/**
 	 * @description 自定义的缓存key的生成策略 若想使用这个key
