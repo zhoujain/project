@@ -106,6 +106,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public CacheManager cacheManager(LettuceConnectionFactory factory) {
+		// 对象序列化范围
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = jacksonSerializer();
         // 配置序列化（解决乱码的问题）,并且配置缓存默认有效期 6小时
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(6));
@@ -157,6 +158,10 @@ public class RedisConfig extends CachingConfigurerSupport {
 	}
 
 
+	/**
+	 * 对象序列化的范围
+	 * @return
+	 */
 	private Jackson2JsonRedisSerializer jacksonSerializer() {
 		// 定义Jackson2JsonRedisSerializer序列化对象
 		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
