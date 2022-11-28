@@ -2,6 +2,7 @@ package com.quick.modules.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.quick.modules.system.entity.SysDepart;
+import com.quick.modules.system.model.SysDepartTreeModel;
 
 import java.util.List;
 
@@ -19,4 +20,9 @@ public interface ISysDepartService extends IService<SysDepart> {
      * @return
      */
     public List<SysDepart> queryUserDeparts(String userId);
+
+    List<SysDepartTreeModel> queryTreeList();
+
+    List<SysDepartTreeModel> queryTreeList(String ids);
+
 }

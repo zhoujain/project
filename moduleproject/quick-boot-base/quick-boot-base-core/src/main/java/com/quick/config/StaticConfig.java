@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 @Data
 public class StaticConfig {
 
-    @Value("${quick.oss.accessKey}")
-    private String accessKeyId;
-
-    @Value("${quick.oss.secretKey}")
-    private String accessKeySecret;
-
-    @Value(value = "${spring.mail.username}")
-    private String emailFrom;
+    // @Value("${quick.oss.accessKey}")
+    // private String accessKeyId;
+    //
+    // @Value("${quick.oss.secretKey}")
+    // private String accessKeySecret;
+    //
+    // @Value(value = "${spring.mail.username}")
+    // private String emailFrom;
 
 //    /**
 //     * 签名密钥串
